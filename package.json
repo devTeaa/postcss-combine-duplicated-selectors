@@ -12,7 +12,7 @@
     "commit": "commit",
     "test": "run-s test:*",
     "test:unit": "ava",
-    "test:lint-js": "eslint --ext md,js .",
+    "test:lint-js": "eslint --fix --ext md,js .",
     "test:lint-md": "remark *.md -q --no-stdout",
     "test:types": "dtslint types",
     "commitlint": "commitlint --from HEAD~1",
