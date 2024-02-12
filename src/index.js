@@ -66,6 +66,25 @@ const defaultOptions = {
   removeDuplicatedProperties: false,
 };
 
+const mergeClassDestinationRule = (destination, rule, options) => {
+  // move declarations to original rule
+  while (rule.nodes.length > 0) {
+    destination.append(rule.nodes[0]);
+  }
+  // remove duplicated rule
+  rule.remove();
+
+  if (
+    options.removeDuplicatedProperties ||
+    options.removeDuplicatedValues
+  ) {
+    removeDupProperties(
+        destination,
+        options.removeDuplicatedValues,
+    );
+  }
+};
+
 module.exports = (options) => {
   options = Object.assign({}, defaultOptions, options);
   return {
@@ -106,23 +125,7 @@ module.exports = (options) => {
 
             // check if node has already been processed
             if (destination === rule) return;
-
-            // move declarations to original rule
-            while (rule.nodes.length > 0) {
-              destination.append(rule.nodes[0]);
-            }
-            // remove duplicated rule
-            rule.remove();
-
-            if (
-              options.removeDuplicatedProperties ||
-              options.removeDuplicatedValues
-            ) {
-              removeDupProperties(
-                  destination,
-                  options.removeDuplicatedValues,
-              );
-            }
+            mergeClassDestinationRule(destination, rule, options);
           } else {
             if (
               options.removeDuplicatedProperties ||
