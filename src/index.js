@@ -124,6 +124,7 @@ module.exports = (options) => {
           });
 
           const regexDataV = /\[data-v-\S+\]/;
+          const regexDarkMode = /^\[dark\]\s/;
 
           /**
            * Create map of same class name without data-v
@@ -135,7 +136,7 @@ module.exports = (options) => {
           const sameClassDiffDataVMap = new Map();
           Array.from(map.keys()).forEach((value) => {
             const keyName = mergeClassAndPropsToKey(
-                value.replace(regexDataV, ''),
+                value.replace(regexDataV, '').replace(regexDarkMode, ''),
                 map.get(value).nodes,
             );
 
@@ -143,8 +144,11 @@ module.exports = (options) => {
               sameClassDiffDataVMap.set(keyName, value);
             }
           });
+
+          const selectorHasDataVOrDark = regexDataV.test(selector) ||
+            regexDarkMode.test(selector);
           const selectorClassPropsKey = mergeClassAndPropsToKey(
-              selector.replace(regexDataV, ''),
+              selector.replace(regexDataV, '').replace(regexDarkMode, ''),
               rule.nodes,
           );
 
@@ -160,6 +164,11 @@ module.exports = (options) => {
             if (destination === rule) return true;
             mergeClassDestinationRule(destination, rule, options);
 
+            if (destination.selector.includes(
+                selector.replace(regexDarkMode, ''),
+            )) {
+              return;
+            }
 
             destination.selector = `${destination.selector}, ${selector}`;
           } else if (map.has(selector)) {
