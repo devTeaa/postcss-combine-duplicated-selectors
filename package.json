@@ -1,6 +1,6 @@
 {
-  "name": "postcss-combine-duplicated-selectors",
-  "version": "10.0.3",
+  "name": "@devteaa/postcss-combine-duplicated-selectors",
+  "version": "10.0.4",
   "description": "automatically keep css selectors unique",
   "main": "src/index.js",
   "types": "types/index.d.ts",
@@ -23,17 +23,17 @@
     "selector"
   ],
   "author": {
-    "name": "Christian Murphy",
-    "email": "christian.murphy.42@gmail.com",
-    "url": "https://github.com/ChristianMurphy"
+    "name": "devteaa",
+    "email": "devteaa@protonmail.com",
+    "url": "https://github.com/devTeaa"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChristianMurphy/postcss-combine-duplicated-selectors.git"
+    "url": "git+https://github.com/devTeaa/postcss-combine-duplicated-selectors.git"
   },
-  "homepage": "https://github.com/ChristianMurphy/postcss-combine-duplicated-selectors",
+  "homepage": "https://github.com/devTeaa/postcss-combine-duplicated-selectors",
   "bugs": {
-    "url": "https://github.com/ChristianMurphy/postcss-combine-duplicated-selectors/issues"
+    "url": "https://github.com/devTeaa/postcss-combine-duplicated-selectors/issues"
   },
   "license": "MIT",
   "peerDependencies": {
