@@ -378,3 +378,11 @@ body {
 }
 `,
 );
+
+test(
+  'class with different data-v',
+  css,
+  '.module[data-v-4cefafe4] {} .module[data-v-31c4755a] {} .module[data-v-81c0612c] {}',
+  '.module[data-v-4cefafe4], .module[data-v-31c4755a], .module[data-v-81c0612c] {}',
+);
+

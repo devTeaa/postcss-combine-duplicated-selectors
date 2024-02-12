@@ -85,6 +85,10 @@ const mergeClassDestinationRule = (destination, rule, options) => {
   }
 };
 
+const mergeClassAndPropsToKey = (className, nodes) => {
+  return `${className}_${nodes.join('|')}`;
+};
+
 module.exports = (options) => {
   options = Object.assign({}, defaultOptions, options);
   return {
@@ -119,7 +123,46 @@ module.exports = (options) => {
             lossless: false,
           });
 
-          if (map.has(selector)) {
+          const regexDataV = /\[data-v-\S+\]/;
+
+          /**
+           * Create map of same class name without data-v
+           * ex: Map(2) {
+           * '.module_color: red' => '.module[data-v-4cefafe4]',
+           * '.module_color: blue' => '.module[data-v-31c4755a]'
+           * }
+           */
+          const sameClassDiffDataVMap = new Map();
+          Array.from(map.keys()).forEach((value) => {
+            const keyName = mergeClassAndPropsToKey(
+                value.replace(regexDataV, ''),
+                map.get(value).nodes,
+            );
+
+            if (!sameClassDiffDataVMap.has(keyName)) {
+              sameClassDiffDataVMap.set(keyName, value);
+            }
+          });
+          const selectorClassPropsKey = mergeClassAndPropsToKey(
+              selector.replace(regexDataV, ''),
+              rule.nodes,
+          );
+
+          if (
+            selectorHasDataVOrDark &&
+            sameClassDiffDataVMap.has(selectorClassPropsKey)
+          ) {
+            const destination = map.get(
+                sameClassDiffDataVMap.get(selectorClassPropsKey),
+            );
+
+            // check if node has already been processed
+            if (destination === rule) return true;
+            mergeClassDestinationRule(destination, rule, options);
+
+
+            destination.selector = `${destination.selector}, ${selector}`;
+          } else if (map.has(selector)) {
             // store original rule as destination
             const destination = map.get(selector);
 
