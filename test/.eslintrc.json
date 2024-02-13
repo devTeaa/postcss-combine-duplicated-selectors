@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "extends": [
+        "plugin:ava/recommended"
+    ],
+    "plugins": [
+        "ava"
+    ],
+    "rules": {
+        "max-len": [
+          "error",
+          {
+            "code": 150
+          }
+        ]
+    }
+}

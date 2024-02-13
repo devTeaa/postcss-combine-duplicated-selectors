@@ -1,5 +1,9 @@
 # Postcss combine duplicated selectors
 
+## This fork added 2 features:
+- combines class with different data-v but similar props
+- remove dark prefix if there is class without dark prefix with same props
+
 <!-- current project status -->
 
 [![npm](https://img.shields.io/npm/v/postcss-combine-duplicated-selectors.svg)](https://www.npmjs.com/package/postcss-combine-duplicated-selectors)

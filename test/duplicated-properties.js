@@ -131,3 +131,17 @@ test(
 }
 `,
 );
+
+test(
+  'class with different data-v, with dark',
+  removeExactDuplicates,
+  '.module[data-v-4cefafe4] { color: red; } .module[data-v-31c4755a] { color: red; } [dark] .module[data-v-81c0612c] { color: red; }',
+  '.module[data-v-4cefafe4], .module[data-v-31c4755a], [dark] .module[data-v-81c0612c] { color: red; }',
+);
+
+test(
+  'class with different data-v, with dark same data-v',
+  removeExactDuplicates,
+  '.module[data-v-4cefafe4] { color: red; } .module[data-v-31c4755a] { color: red; } [dark] .module[data-v-31c4755a] { color: red; }',
+  '.module[data-v-4cefafe4], .module[data-v-31c4755a] { color: red; }',
+);
